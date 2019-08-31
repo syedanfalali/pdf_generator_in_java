@@ -1,0 +1,80 @@
+import com.itextpdf.text.*;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;	
+import java.io.*;
+import java.util.*;
+import java.awt.Desktop;
+public class Project
+{
+      static String name,num;
+      public static float s1,s2,s3,cgp;
+    public static void main(String[] args)
+{
+	
+        Document document = new Document();//CREATING DOCUMENT
+	Scanner sc=new Scanner(System.in);
+	//Date date=new Date();
+	System.out.println("Enter student details");
+	System.out.println("Enter name:");
+	name=sc.nextLine();
+	System.out.println("Enter regd number:");
+	num=sc.nextLine();
+	System.out.println("Enter sem I result:");
+	s1=sc.nextFloat();
+	System.out.println("Enter sem II result:");
+	s2=sc.nextFloat();
+	System.out.println("Enter sem III result:");
+	s3=sc.nextFloat();
+	cgp=(s1+s2+s3)/3;
+	
+ 	try 
+	{
+            PdfWriter.getInstance(document, new FileOutputStream("Pdfproject.pdf"));//CREATING PDF
+	    
+            document.open();//OPNING DOCUMENT
+	    float [] pointcolwidth={150f,150f};//DIMENSION OF TABLE
+            PdfPTable table = new PdfPTable(pointcolwidth); //CREATING TABLE
+	     table.setWidthPercentage(80);
+	    table.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    Paragraph  para1=new Paragraph("*****************************************STUDENT INFORMATION************************************\nName:"+name+"\nRegd no.:"+num+"\n");
+	     Paragraph  para2=new Paragraph("Address:\nContact number:\n\n\n\n");
+		document.add(para1);
+		document.add(para2);
+
+
+		
+            Image image1 = Image.getInstance("image.jpg");//CREATING IMAGE
+	    image1.setAbsolutePosition(410f,660f);//POSITION OF IMAGE
+            image1.scalePercent(50f);//SIZE OF IMG
+            document.add(image1);//ADDING IMG
+		// ADDING DATA IN CELL IN TABLE
+            PdfPCell cell1 = new PdfPCell(new Paragraph("semester I:"));
+            PdfPCell cell2 = new PdfPCell(new Paragraph(String.valueOf(s1)));
+	    PdfPCell cell3 = new PdfPCell(new Paragraph("semester II:"));
+	    PdfPCell cell4 = new PdfPCell(new Paragraph(String.valueOf(s2)));
+ 	    PdfPCell cell5 = new PdfPCell(new Paragraph("semester III:"));
+	    PdfPCell cell6 = new PdfPCell(new Paragraph(String.valueOf(s3)));
+	    PdfPCell cell7 = new PdfPCell(new Paragraph("cumulative GPA:"));
+	    PdfPCell cell8 = new PdfPCell(new Paragraph(String.valueOf(cgp)));
+	     // ADDING CELLS TO TABLE
+            table.addCell(cell1);
+            table.addCell(cell2);
+	    table.addCell(cell3);
+	    table.addCell(cell4);
+	table.addCell(cell5);
+	table.addCell(cell6);
+	table.addCell(cell7);
+	table.addCell(cell8);
+		// ADDING TABLE TO DOCUMENT
+            document.add(table);
+		//CLOSING DOCUMNT
+            document.close();
+        } 
+	catch(Exception e)
+	{
+		System.out.println(e);
+        }
+    }
+}
